@@ -1,13 +1,33 @@
-const {gql} = require('apollo-server');
+import { gql } from 'apollo-server';
 
 export const typeDefs = gql`
 
-  type Book {
-    title: String
-    author: String
+  type ToDo {
+    item: String!
+    id: ID!
+    completed: Boolean!
   }
 
   type Query {
-    books: [Book]
+    items: [ToDo]
+    item(id: ID!): ToDo
   }
+  input Input {
+    item: String!
+    id: ID!
+    completed: Boolean!
+  }
+  type Mutation {
+    createToDo(input: Input!): ServerResponse!
+    deleteToDo(input: Input!): ServerResponse!
+    updateToDo(input: Input!): ServerResponse! 
+  }
+
+  type ServerResponse {
+    success: Boolean!
+    item: String!
+    id: ID!
+    message: String!
+  }
+
 `;
